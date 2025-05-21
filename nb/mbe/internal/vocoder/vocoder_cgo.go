@@ -78,6 +78,12 @@ func (coder *Vocoder) Decode(dst []int16, src []byte) error {
 				(*C.int16_t)(unsafe.Pointer(&dst[dstOffset])),
 				(*C.uint8_t)(unsafe.Pointer(&src[srcOffset])))
 		}
+	case voice.IMBE7200x4400:
+		for srcOffset, dstOffset := 0, 0; srcOffset < srcLen; srcOffset, dstOffset = srcOffset+srcBlockSize, dstOffset+dstBlockSize {
+			C.vocoder_imbe_decode(coder.ptr,
+				(*C.int16_t)(unsafe.Pointer(&dst[dstOffset])),
+				(*C.int16_t)(unsafe.Pointer(&src[srcOffset])))
+		}
 	}
 
 	return nil
@@ -129,7 +135,7 @@ func (coder *Vocoder) EncodeBlockSize() int {
 	case voice.IMBE7100x4400:
 		return 0 // TODO
 	case voice.IMBE7200x4400:
-		return 0 // TODO
+		return 13 // TODO
 	default:
 		return 0
 	}

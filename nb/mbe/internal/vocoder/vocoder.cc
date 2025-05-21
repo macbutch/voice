@@ -1,6 +1,8 @@
 #include "vocoder.h"
 #include "mbelib.h"
 
+#include <iostream>
+
 mbe_vocoder::mbe_vocoder(int uvquality)
     : dmr_mode(false),
       dstar_mode(false),
@@ -166,7 +168,11 @@ void mbe_vocoder::ambe_set_gain(float gain_adjust)
 
 void mbe_vocoder::imbe_encode(int16_t *frame, int16_t *samples)
 {
-    imbe->imbe_encode(frame, samples);
+	  std::cout << "pjao" <<std::endl;
+	  int c = 4/0;
+
+//	  processImbe7200x4400Frame
+   imbe->imbe_encode(frame, samples);
 }
 
 void mbe_vocoder::imbe_decode(int16_t *frame, int16_t *samples)
@@ -224,6 +230,7 @@ void vocoder_imbe_encode(vocoder coder, int16_t *frame_vector, int16_t *snd)
 
 void vocoder_imbe_decode(vocoder coder, int16_t *frame_vector, int16_t *snd)
 {
+		std::cout << "decode" << snd << std::endl;
     coder->imbe_decode(frame_vector, snd);
 }
 
