@@ -56,34 +56,69 @@ func (coder *Vocoder) Close() error {
 	return nil
 }
 
-func (coder *Vocoder) Decode(dst []int16, src []byte) error {
-	var (
-		dstLen       = len(dst)
-		dstBlockSize = 160
-		srcLen       = len(src)
-		srcBlockSize = coder.EncodeBlockSize()
-		minLen       = (srcLen / srcBlockSize) * dstBlockSize
-	)
-	if srcLen%srcBlockSize != 0 {
-		return fmt.Errorf("mbe: src length of %d must be multiple of %d", srcLen, srcBlockSize)
-	}
-	if dstLen < minLen {
-		return fmt.Errorf("mbe: dst length of %d is too small, expected at least %d", dstLen, minLen)
-	}
+func (coder *Vocoder) Decode(dst []int16, s interface{}) error {
+	// src := s.([]byte)
+	// var (
+	// 	dstLen       = len(dst)
+	// 	dstBlockSize = 160
+	// 	srcLen       = len(src)
+	// 	srcBlockSize = coder.EncodeBlockSize()
+	// 	minLen       = (srcLen / srcBlockSize) * dstBlockSize
+	// )
+	// if srcLen%srcBlockSize != 0 {
+	// 	return fmt.Errorf("mbe: src length of %d must be multiple of %d", srcLen, srcBlockSize)
+	// }
+	// if dstLen < minLen {
+	// 	return fmt.Errorf("mbe: dst length of %d is too small, expected at least %d", dstLen, minLen)
+	// }
 
 	switch coder.tag {
 	case voice.AMBE3600x2400, voice.AMBE3600x2450:
+		src := s.([]byte)
+		var (
+			dstLen       = len(dst)
+			dstBlockSize = 160
+			srcLen       = len(src)
+			srcBlockSize = coder.EncodeBlockSize()
+			minLen       = (srcLen / srcBlockSize) * dstBlockSize
+		)
+		if srcLen%srcBlockSize != 0 {
+			return fmt.Errorf("mbe: src length of %d must be multiple of %d", srcLen, srcBlockSize)
+		}
+		if dstLen < minLen {
+			return fmt.Errorf("mbe: dst length of %d is too small, expected at least %d", dstLen, minLen)
+		}
+
 		for srcOffset, dstOffset := 0, 0; srcOffset < srcLen; srcOffset, dstOffset = srcOffset+srcBlockSize, dstOffset+dstBlockSize {
 			C.vocoder_ambe_decode(coder.ptr,
 				(*C.int16_t)(unsafe.Pointer(&dst[dstOffset])),
 				(*C.uint8_t)(unsafe.Pointer(&src[srcOffset])))
 		}
 	case voice.IMBE7200x4400:
+		src := s.([]int16)
+		var (
+			dstLen       = len(dst)
+			dstBlockSize = 160
+			srcLen       = len(src)
+			srcBlockSize = coder.EncodeBlockSize()
+			minLen       = (srcLen / srcBlockSize) * dstBlockSize
+		)
+		if srcLen%srcBlockSize != 0 {
+			return fmt.Errorf("mbe: src length of %d must be multiple of %d", srcLen, srcBlockSize)
+		}
+		if dstLen < minLen {
+			return fmt.Errorf("mbe: dst length of %d is too small, expected at least %d", dstLen, minLen)
+		}
+
 		for srcOffset, dstOffset := 0, 0; srcOffset < srcLen; srcOffset, dstOffset = srcOffset+srcBlockSize, dstOffset+dstBlockSize {
+			// FIXME: this is _super_ janky because we're doing a very unsafe cast from []byte data to []int16
+			// there _must_ be a safer way to do it (but we'll roll with it for now)
 			C.vocoder_imbe_decode(coder.ptr,
 				(*C.int16_t)(unsafe.Pointer(&dst[dstOffset])),
 				(*C.int16_t)(unsafe.Pointer(&src[srcOffset])))
 		}
+	default:
+		return fmt.Errorf("unsupported codec or codec mismatch (0x%0x passed to Decode)", coder.tag)
 	}
 
 	return nil
@@ -135,7 +170,7 @@ func (coder *Vocoder) EncodeBlockSize() int {
 	case voice.IMBE7100x4400:
 		return 0 // TODO
 	case voice.IMBE7200x4400:
-		return 13 // TODO
+		return 8 // TODO
 	default:
 		return 0
 	}

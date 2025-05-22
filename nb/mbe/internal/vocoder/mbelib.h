@@ -99,6 +99,7 @@ void mbe_processImbe7100x4400Frame (short *aout_buf, int *errs, int *errs2, char
 /*
  * Prototypes from mbelib.c
  */
+void mbe_printVersion (char *str);
 void mbe_moveMbeParms (mbe_parms * cur_mp, mbe_parms * prev_mp);
 void mbe_useLastMbeParms (mbe_parms * cur_mp, mbe_parms * prev_mp);
 void mbe_initMbeParms (mbe_parms * cur_mp, mbe_parms * prev_mp, mbe_parms * prev_mp_enhanced);

@@ -104,7 +104,7 @@ func (mbe *mbe) Close() error {
 }
 
 // Decode a buffer
-func (mbe *mbe) Decode(dst []int16, src []byte) error {
+func (mbe *mbe) Decode(dst []int16, src interface{}) error {
 	return mbe.coder.Decode(dst, src)
 }
 

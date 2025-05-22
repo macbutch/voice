@@ -32,7 +32,7 @@ type Codec interface {
 	//
 	// Codecs shall not retain src nor dst but may use src or dst as scratch
 	// space during the call.
-	Decode(dst []int16, src []byte) error
+	Decode(dst []int16, src interface{}) error
 }
 
 // checkEncodeBounds does boundary checks for the given buffer sizes.

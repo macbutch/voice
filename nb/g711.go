@@ -39,7 +39,8 @@ func (codec aLaw) Encode(dst []byte, src []int16) error {
 	return nil
 }
 
-func (codec aLaw) Decode(dst []int16, src []byte) error {
+func (codec aLaw) Decode(dst []int16, s interface{}) error {
+	src := s.([]byte)
 	if err := checkDecodeBounds(codec, dst, src); err != nil {
 		return err
 	}
@@ -81,7 +82,8 @@ func (codec µLaw) Encode(dst []byte, src []int16) error {
 	return nil
 }
 
-func (codec µLaw) Decode(dst []int16, src []byte) error {
+func (codec µLaw) Decode(dst []int16, s interface{}) error {
+	src := s.([]byte)
 	if err := checkDecodeBounds(codec, dst, src); err != nil {
 		return err
 	}
