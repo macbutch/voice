@@ -168,10 +168,6 @@ void mbe_vocoder::ambe_set_gain(float gain_adjust)
 
 void mbe_vocoder::imbe_encode(int16_t *frame, int16_t *samples)
 {
-	  std::cout << "pjao" <<std::endl;
-	  int c = 4/0;
-
-//	  processImbe7200x4400Frame
    imbe->imbe_encode(frame, samples);
 }
 
