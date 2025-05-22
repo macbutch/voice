@@ -22,9 +22,9 @@ The AMBE and IMBE encoders are taken from the op25 project and are
 package mbe
 
 import (
-	"github.com/go-voice/voice"
-	"github.com/go-voice/voice/nb"
-	"github.com/go-voice/voice/nb/mbe/internal/vocoder"
+	"github.com/macbutch/voice"
+	"github.com/macbutch/voice/nb"
+	"github.com/macbutch/voice/nb/mbe/internal/vocoder"
 )
 
 // DefaultQuality is the default quality for our codecs.
