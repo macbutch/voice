@@ -5,7 +5,7 @@ package vocoder
 import (
 	"errors"
 
-	"github.com/go-voice/voice"
+	"github.com/macbutch/voice"
 )
 
 func isAvailable() bool {

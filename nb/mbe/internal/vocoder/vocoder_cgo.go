@@ -15,7 +15,7 @@ import (
 	"fmt"
 	"unsafe"
 
-	"github.com/go-voice/voice"
+	"github.com/macbutch/voice"
 )
 
 func isAvailable() bool {

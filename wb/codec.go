@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/go-voice/voice"
+	"github.com/macbutch/voice"
 )
 
 // Codec is a coder-decoder of voice data at 16000 Hz.

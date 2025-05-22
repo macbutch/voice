@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/go-voice/voice"
+	"github.com/macbutch/voice"
 )
 
 var defaultFormat = voice.Format{

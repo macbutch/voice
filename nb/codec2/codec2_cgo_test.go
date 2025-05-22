@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/go-voice/voice/internal/tests"
+	"github.com/macbutch/voice/internal/tests"
 )
 
 func TestMode(t *testing.T) {

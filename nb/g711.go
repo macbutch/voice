@@ -1,7 +1,7 @@
 package nb
 
 import (
-	"github.com/go-voice/voice"
+	"github.com/macbutch/voice"
 )
 
 // g711 are codecs in the ITU-T g711 specification

@@ -5,7 +5,7 @@ package codec2
 import (
 	"errors"
 
-	"github.com/go-voice/voice/nb"
+	"github.com/macbutch/voice/nb"
 )
 
 func isAvailable() bool {
