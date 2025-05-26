@@ -226,7 +226,7 @@ void vocoder_imbe_encode(vocoder coder, int16_t *frame_vector, int16_t *snd)
 
 void vocoder_imbe_decode(vocoder coder, int16_t *snd, int16_t *frame_vector)
 {
-		std::cout << "decode" << snd << std::endl;
+		// std::cout << "decode" << snd << std::endl;
     coder->imbe_decode(frame_vector, snd);
 }
 
